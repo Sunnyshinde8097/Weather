@@ -1,0 +1,61 @@
+/* General App Styling */
+.weather-app {
+    text-align: center;
+    margin-top: 50px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+  }
+  
+  /* Animated Gradient Background */
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(-45deg, #1e3c72, #2a5298, #00c6ff, #0072ff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+  }
+  
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Input and Button Styling */
+  .weather-app input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    outline: none;
+  }
+  
+  .weather-app button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #0072ff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .weather-app button:hover {
+    background-color: #00c6ff;
+  }
+  
+  /* Weather Report Box */
+  .weather-report {
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+  
