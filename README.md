@@ -26,4 +26,4 @@ Lottie‑React (Animations)
 
 CSS3 (Styling with gradient background and custom components)
 <h2>Screenshot<h2/>
-  ![Weather APP Screenshot](./public/Weatherapp.png)
+  ![Weather APP Screenshot](../public/Weatherapp.png)
