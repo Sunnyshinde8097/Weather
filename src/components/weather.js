@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Lottie from "lottie-react";
+
+// Weather/season animations
 import cloudAnim from "../Assets/Animatation/Weather-thunder.json";
-import sunAnim from "../Assets/Animatation/Weather-thunder.json";
+import sunAnim from "../Assets/Animatation/Summer Vibes.json";
 import rainAnim from "../Assets/Animatation/rainy icon.json";
+import summerAnim from "../Assets/Animatation/Summer Vibes.json";
+import winterAnim from "../Assets/Animatation/Weather-thunder.json";
 
 const Weather = () => {
   const [city, setCity] = useState("");
@@ -12,7 +16,6 @@ const Weather = () => {
 
   const API_KEY = "09ece4d847df5187af4e6d653b63dfc8";
 
-  // Fetch city suggestions using OpenWeather Geocoding API
   const getCitySuggestions = async (query) => {
     if (!query) {
       setSuggestions([]);
@@ -35,24 +38,36 @@ const Weather = () => {
         `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`
       );
       setWeather(res.data);
-      setSuggestions([]); // clear suggestions after search
+      setSuggestions([]);
     } catch (err) {
       console.error(err);
       alert("City not found!");
     }
   };
 
-  // Pick animation based on condition
+  // Decide animation based on condition + season
   const getAnimation = (condition) => {
     if (!condition) return null;
     const main = condition.toLowerCase();
-    if (main.includes("cloud")) return cloudAnim;
+    const month = new Date().getMonth(); // 0 = Jan, 11 = Dec
+
+    // Rain/cloud always override
     if (main.includes("rain")) return rainAnim;
-    return sunAnim; // default sunny
+    if (main.includes("cloud")) return cloudAnim;
+
+    // Season-based override when clear/sunny
+    if (main.includes("clear") || main.includes("sun")) {
+      if (month >= 3 && month <= 5) return summerAnim; // Apr–Jun
+      if (month >= 6 && month <= 8) return rainAnim;   // Jul–Sep (monsoon)
+      if (month >= 11 || month <= 1) return winterAnim; // Dec–Feb
+      return sunAnim; // default sunny
+    }
+
+    return sunAnim;
   };
 
   return (
-<div style={{ textAlign: "center", marginTop: "50px", background: "lightyellow" }}>
+    <div style={{ textAlign: "center", marginTop: "50px", background: "lightyellow" }}>
       <h1 style={{ fontSize: "48px", fontWeight: "bold" }}>🌤️ Weather App</h1>
 
       <div style={{ position: "relative", display: "inline-block" }}>
@@ -72,7 +87,6 @@ const Weather = () => {
             marginRight: "10px",
           }}
         />
-        {/* Suggestions Dropdown */}
         {suggestions.length > 0 && (
           <ul
             style={{
@@ -131,7 +145,6 @@ const Weather = () => {
             Wind Speed: {weather.wind.speed} m/s
           </p>
 
-          {/* Animated Weather Icon */}
           <div style={{ width: "200px", margin: "auto", marginTop: "20px" }}>
             <Lottie
               animationData={getAnimation(weather.weather[0].main)}
